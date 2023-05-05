@@ -63,12 +63,54 @@
       background: black;
       position: absolute;
       top: 50%;
+      transform-origin: 100%;
+      transform: rotate(90deg);
+      transition: all 0.05s;
+      transition-timing-function: cubic-bezier(0, 1.97, 0.58, 1);
     }
 
   </style>
 
   <script>
 
+    const hourHand = document.querySelector('.hour-hand');
+    const minuteHand = document.querySelector('.min-hand');
+    const secondHand = document.querySelector('.second-hand');
+
+    const element = document.querySelector('.hand');
+    const style = getComputedStyle(element);
+    transitionTiming = style.transition;
+    function setDate() {
+      secondHand.style.transition = transitionTiming;
+      minuteHand.style.transition = transitionTiming;
+      hourHand.style.transition = transitionTiming;
+      const now = new Date();
+      const seconds = now.getSeconds();
+      const minutes = now.getMinutes();
+      const hours = now.getHours();
+      const secondsDegrees = ((seconds / 60) * 360) + 90;
+      const minutesDegrees = ((minutes / 60) * 360) + 90;
+      const hoursDegrees = (((hours) / 12) * 360) + 90;
+
+      if (secondsDegrees === 90) {
+        secondHand.style.transition = 'all 0s';
+      }
+
+      if (minutesDegrees === 90) {
+        minuteHand.style.transition = 'all 0s';
+      }
+
+      if (hoursDegrees === 90) {
+        hourHand.style.transition = 'all 0s';
+      }
+      secondHand.style.transform = `rotate(${secondsDegrees}deg)`;
+      hourHand.style.transform = `rotate(${hoursDegrees}deg)`;
+      minuteHand.style.transform = `rotate(${minutesDegrees}deg)`;
+
+      console.log(secondHand.style.transition);
+    }
+
+    setInterval(setDate, 1000);
 
   </script>
 </body>
