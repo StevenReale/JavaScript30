@@ -10,7 +10,7 @@
 
     <nav>
       <ul class="menu">
-        <li><a href="">Home</a></li>
+        <li><a class="home" href="">Home</a></li>
         <li><a href="">Order Status</a></li>
         <li><a href="">Tweets</a></li>
         <li><a href="">Read Our History</a></li>
@@ -27,7 +27,32 @@
     </div>
 
   <script>
-    // 👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀
+    const triggers = document.querySelectorAll('a');
+    const highlight = document.createElement('span');
+    const home = document.querySelector('.home');
+    const homeCoords = home.getBoundingClientRect();
+
+    highlight.classList.add('highlight');
+    home.append(highlight);
+
+    function highlightLink() {
+      const linkCoords = this.getBoundingClientRect();
+      console.log(linkCoords);
+      const coords = {
+        width: linkCoords.width,
+        height: linkCoords.height,
+        top: linkCoords.top + window.scrollY,
+        left: linkCoords.left + window.scrollX
+      }
+      highlight.style.width = `${coords.width}px`; 
+      highlight.style.height = `${coords.height}px`; 
+      highlight.style.transform = `translate(${coords.left}px, ${coords.top}px`;
+    }
+
+    
+
+    triggers.forEach(a=>a.addEventListener('mouseenter', highlightLink));
+
   </script>
 </body>
 </html>
